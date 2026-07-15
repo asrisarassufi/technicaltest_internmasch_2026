@@ -79,7 +79,7 @@ docker-compose up --build
 
 ### 2. Catatan Deployment Production (Vercel & Render)
 
-Untuk deployment produksi, disarankan memisahkan hosting frontend dan backend. Frontend React dideploy ke layanan statis seperti **Vercel**, sedangkan backend Express dideploy ke platform yang mendukung persistence/persistent process seperti **Render**, **Railway**, atau **Fly.io** agar simulasi sensor in-memory dan background timer (`setInterval`) tetap berjalan stabil.
+Untuk deployment produksi, disarankan memisahkan hosting frontend dan backend. Frontend React dideploy ke layanan statis seperti **Vercel**, sedangkan backend Express dideploy ke platform yang mendukung persistence/persistent process seperti **Render**, agar simulasi sensor in-memory dan background timer (`setInterval`) tetap berjalan stabil.
 
 ---
 
