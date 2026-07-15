@@ -7,28 +7,30 @@ app.use(express.json()); // Middleware untuk parsing JSON body
 
 // Data awal dari soal
 let sensorData = [
-  {"timestamp": "2026-06-21T10:00:00", "suhu": 28.4},
-  {"timestamp": "2026-06-21T10:00:05", "suhu": 28.6},
-  {"timestamp": "2026-06-21T10:00:10", "suhu": 29.1},
-  {"timestamp": "2026-06-21T10:00:15", "suhu": 30.2},
-  {"timestamp": "2026-06-21T10:00:20", "suhu": 31.0}
+  { "timestamp": "2026-06-21T10:00:00", "suhu": 28.4, "location": "Mesin A" },
+  { "timestamp": "2026-06-21T10:00:05", "suhu": 28.6, "location": "Mesin B" },
+  { "timestamp": "2026-06-21T10:00:10", "suhu": 29.1, "location": "Mesin C" },
+  { "timestamp": "2026-06-21T10:00:15", "suhu": 30.2, "location": "Mesin D" },
+  { "timestamp": "2026-06-21T10:00:20", "suhu": 31.0, "location": "Mesin E" }
 ];
-
+const daftarLokasi = ["Mesin A", "Mesin B", "Mesin C", "Mesin D", "Mesin E"];
 // Simulasi sensor: tambah data baru setiap 5 detik
 setInterval(() => {
   const newTemp = (Math.random() * (90 - 25) + 25).toFixed(1); // Acak 25 - 90
   const newTimestamp = new Date().toISOString().split('.')[0]; // Format ISO tanpa milidetik
   const parsedTemp = parseFloat(newTemp);
+  const randomLocation = daftarLokasi[Math.floor(Math.random() * daftarLokasi.length)];
 
   sensorData.push({
     timestamp: newTimestamp,
     suhu: parsedTemp,
-    anomali: parsedTemp > 80 // Deteksi anomali sisi server
+    location: randomLocation,
+    anomali: parsedTemp > 80 || parsedSuhu < 20 // Deteksi anomali sisi server
   });
 
   // Jaga agar data tidak terlalu bengkak (simpan 20 terakhir saja)
   if (sensorData.length > 20) {
-    sensorData.shift(); 
+    sensorData.shift();
   }
 }, 5000);
 
@@ -63,7 +65,7 @@ app.post('/readings', (req, res) => {
   const newReading = {
     timestamp: parsedTimestamp,
     suhu: parsedSuhu,
-    anomali: parsedSuhu > 80 // Deteksi anomali
+    anomali: parsedSuhu > 80 || parsedSuhu < 20  // Deteksi anomali
   };
 
   sensorData.push(newReading);
@@ -82,4 +84,4 @@ app.post('/readings', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server jalan di port ${PORT}`);
-});
+});

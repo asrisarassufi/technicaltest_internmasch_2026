@@ -97,8 +97,8 @@ function App() {
             <button
               onClick={() => setIsPaused(!isPaused)}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 flex items-center gap-1.5 ${isPaused
-                  ? 'bg-amber-500 hover:bg-amber-600 text-white animate-pulse'
-                  : 'bg-slate-700 hover:bg-slate-600 text-white border border-slate-600'
+                ? 'bg-amber-500 hover:bg-amber-600 text-white animate-pulse'
+                : 'bg-slate-700 hover:bg-slate-600 text-white border border-slate-600'
                 }`}
             >
               {isPaused ? '▶️ Lanjutkan' : '⏸️ Jeda Aliran'}
@@ -204,6 +204,37 @@ function App() {
               </ResponsiveContainer>
             </div>
           </div>
+        </div>
+
+        <div className='bg-white border border-gray 100 rounded-xl p-6 shadow-sm mt-6 m-6'>
+          <h3 className='text-xl font-bold text-gray-800 mb-6'> List Data Anomali</h3>
+          <table className='w-full'>
+            <thead className="bg-gray-100 border-b">
+              <tr>
+                <th className='px-6 py-3 text-left uppercase font-semibold text-gray-500'>Waktu</th>
+                <th className='px-6 py-3 text-left uppercase font-semibold text-gray-500'>Suhu Anomali</th>
+                <th className='px-6 py-3 text-left uppercase font-semibold text-gray-500'>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[...data]
+                .filter(item => item.anomali)
+                .reverse().map((item, idx) => (
+                  <tr key={idx} className='border-b'>
+                    <td className='px-6 py-3 text-left'>{item.timestamp}</td>
+                    <td className='px-6 py-3 text-left'>{item.suhu}°C</td>
+                    <td className='px-6 py-3 text-left'>
+                      <input
+                        type="checkbox"
+                        checked={item.status}
+                        className="bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 w-full" readOnly
+                        onChange={(e) => console.log('Anomali di verifikasi:', item.timestamp)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
