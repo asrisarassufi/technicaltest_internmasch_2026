@@ -68,16 +68,35 @@ Menyediakan API sensor real-time yang mensimulasikan data mesin pabrik secara te
 
 Menyediakan konfigurasi deployment agar aplikasi dapat dijalankan secara instan di mana saja.
 
-### 1. Menjalankan Aplikasi Secara Lokal (Docker & Docker Compose)
+### 🐳 Panduan Menjalankan Aplikasi Secara Lokal (Menggunakan Docker)
 
-Aplikasi telah dikemas dengan Docker sehingga dapat dijalankan dengan satu perintah tunggal. Pastikan Docker Desktop telah berjalan di komputer Anda, lalu ketik:
-```bash
-docker-compose up --build
-```
-* **Frontend (React + Nginx)** akan berjalan di: `http://localhost:80`
-* **Backend (API Express)** akan berjalan di: `http://localhost:3000`
+Untuk menjalankan seluruh aplikasi (Frontend & Backend) sekaligus tanpa perlu menginstal dependensi Node.js secara manual di komputer Anda, ikuti langkah berikut:
 
-### 2. Catatan Deployment Production (Vercel & Render)
+#### **Prasyarat (Prerequisites):**
+* Pastikan Anda telah menginstal [Docker](https://www.docker.com/products/docker-desktop/) dan Docker Desktop sedang aktif di komputer Anda.
+
+#### **Langkah-langkah Menjalankan:**
+1. Buka terminal (CMD / PowerShell / Terminal Mac) dan masuk ke direktori proyek utama (`masch-test`):
+   ```bash
+   cd path/to/technicaltest_internmasch_2026/masch-test
+   ```
+2. Jalankan perintah Docker Compose untuk membangun dan menjalankan kontainer:
+   ```bash
+   docker-compose up --build
+   ```
+3. Tunggu hingga proses build selesai. Setelah siap, Anda dapat membuka browser dan mengakses:
+   * **Frontend (Aplikasi Web):** `http://localhost:80`
+   * **Backend (REST API):** `http://localhost:3000`
+
+#### **Cara Menghentikan Aplikasi:**
+* Tekan tombol `Ctrl + C` pada terminal tempat docker berjalan, lalu bersihkan kontainer dengan mengetik:
+  ```bash
+  docker-compose down
+  ```
+
+---
+
+### 🌐 Catatan Deployment Production (Vercel & Render)
 
 Untuk deployment produksi, disarankan memisahkan hosting frontend dan backend. Frontend React dideploy ke layanan statis seperti **Vercel**, sedangkan backend Express dideploy ke platform yang mendukung persistence/persistent process seperti **Render**, agar simulasi sensor in-memory dan background timer (`setInterval`) tetap berjalan stabil.
 
